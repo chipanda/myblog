@@ -28,11 +28,12 @@ ReactComponent具备setState和forState两个方法，两个方法的本质是�
 
 *注释：React中ReactComponent特指React.Component，我们这里把纯函数也算作一个特殊的ReactComponent，即外部组件类，便于后续理解。*
 
-> ### 总结为三点主要作用：    
->     
-> 1. 描述了渲染的树结构   
-> 2. 维护了state    
-> 3. 解释了在生命周期或事件触发时希望执行的内容    
+
+### 总结为三点主要作用：    
+    
+1. 描述了渲染的树结构   
+2. 维护了state    
+3. 解释了在生命周期或事件触发时希望执行的内容    
 
 ## ReactCompositeComponent：内部组件类        
 
@@ -44,32 +45,26 @@ React内部真正管理组件渲染和更新的类（手动划重点）。其�
 
 实现了挂载、更新、卸载的方法，并负责在合适的时机触发生命周期方法。
 
-> ### 挂载：mountComponent    
->      
-> 返回值为markup，即本节点渲染的内容，在RN中是与Native渲染的真实View关联的一个ID。    
-> 1. 生成ReactComponent的实例，存放于_instance。    
-> 2. 执行componentWillMount  
-> 3. 执行render获得一个element，存放于_renderedElement，根据element获得对应的internalInstance，存放于_renderedComponent，继续对其执行mountComponent，这样就完成了一次挂载过程中的向下解析。直至internalInstance是ReactNativeBaseComponent，就获得了与Native真实View关联的ID，作为markup递归返回。    
-> 4. 将componentDidMount压入待执行队列
+### 挂载：mountComponent    
+     
+返回值为markup，即本节点渲染的内容，在RN中是与Native渲染的真实View关联的一个ID。    
+1. 生成ReactComponent的实例，存放于_instance。    
+2. 执行componentWillMount  
+3. 执行render获得一个element，存放于_renderedElement，根据element获得对应的internalInstance，存放于_renderedComponent，继续对其执行mountComponent，这样就完成了一次挂载过程中的向下解析。直至internalInstance是ReactNativeBaseComponent，就获得了与Native真实View关联的ID，作为markup递归返回。    
+4. 将componentDidMount压入待执行队列
 
-##    
+### 更新：updateComponent
+1. 判断context更改或element的不同，触发componentWillReceiveProps。（props变化伴随着新element）    
+2. 通过_pendingForceUpdate和shouldComponentUpdate决定是否更新。若更新，执行以下：    
+3. 执行componentWillUpdate 
+4. 执行render获得一个element，与之前的_renderedElement对比是否可以通过在旧组件上更新完成变动
+5. 若可以，对_renderedComponent继续执行updateComponent，完成了一次更新过程中的向下解析。  
+6. 若不可以，卸载旧_renderedComponent，根据element实例化并挂载新的_renderedComponent，使用其返回的Markup对旧的进行替换
 
-
-> ### 更新：updateComponent
-> 1. 判断context更改或element的不同，触发componentWillReceiveProps。（props变化伴随着新element）    
-> 2. 通过_pendingForceUpdate和shouldComponentUpdate决定是否更新。若更新，执行以下：    
-> 3. 执行componentWillUpdate 
-> 4. 执行render获得一个element，与之前的_renderedElement对比是否可以通过在旧组件上更新完成变动
-> 5. 若可以，对_renderedComponent继续执行updateComponent，完成了一次更新过程中的向下解析。  
-> 6. 若不可以，卸载旧_renderedComponent，根据element实例化并挂载新的_renderedComponent，使用其返回的Markup对旧的进行替换
-
-##  
-
-
-> ### 卸载：unmountComponent
-> 1. 执行componentWillUnmount 
-> 2. 对_renderedComponent继续unmountComponent，完成了一次卸载过程中的向下解析。 
-> 3. 清空存储的各种5数据
+### 卸载：unmountComponent
+1. 执行componentWillUnmount 
+2. 对_renderedComponent继续unmountComponent，完成了一次卸载过程中的向下解析。 
+3. 清空存储的各种5数据
 
 ## ReactNativeBaseComponent：RN中映射到Native的组件类     
 
@@ -79,42 +74,33 @@ React内部真正管理组件渲染和更新的类（手动划重点）。其�
 
 实现了挂载、更新、卸载的方法，通过UIManager操作Native的UI，向下处理children的解析。
 
-> ### 挂载：mountComponent    
->      
-> 返回值为tag，与RN中真实的View关联。    
-> 1. UIManager.createView，通过tag关联创建Native的View，tag存储在_rootNodeID。 
-> 2. 遍历children执行mountComponent，获得markup的数组(createTags)，UIManager.setChildren(containerTag, createTags)管tag关联，实现了Native中View的关联。
+### 挂载：mountComponent    
+    
+返回值为tag，与RN中真实的View关联。    
+1. UIManager.createView，通过tag关联创建Native的View，tag存储在_rootNodeID。 
+2. 遍历children执行mountComponent，获得markup的数组(createTags)，UIManager.setChildren(containerTag, createTags)管tag关联，实现了Native中View的关联。
 
+### 更新：updateChildren
+1. 比较前后children里的element，对保留的旧节点执行updateComponent。
+2. 产生三种更新操作：移动（已有）、删除、插入（新建），并通过UIManager.manageChildren执行更新
 
-##   
-
-
-> ### 更新：updateChildren
-> 1. 比较前后children里的element，对保留的旧节点执行updateComponent。
-> 2. 产生三种更新操作：移动（已有）、删除、插入（新建），并通过UIManager.manageChildren执行更新
-
-##  
-
-
-> ### 卸载：unmountComponent
-> 1. 遍历children执行unmountComponent 
+### 卸载：unmountComponent
+1. 遍历children执行unmountComponent 
 
 ## 总结
 
-> ### 初始化挂载流程   
-> 1. 顶层element -> 实例化为internalInstance（ReactCompositeComponent） -> internalInstance.mountComponent -> render获得下一级element（重复实例化并mountComponent，直至遇到ReactNativeComponent） -> UIManager.createView(Native中真实创建View，返回关联的tag) -> 遍历children， 对child（element）实例化为internalInstance，重复上述挂载过程 -> UIManager.setChildren(将子节点渲染的tag与父tag关联)    
-> 2. 对于element树，从上到下逐层渲染，element实例化为ReactCompositeComponent或ReactNativeBaseComponent，子节点为数组的均包裹在ReactNativeBaseComponent下。 
-> 3. 真实的View由ReactNativeBaseComponent负责通过UIManager渲染
-> 4. ReactCompositeComponent负责数据管理、传递
-> 5. 开发中嵌套的组件渲染为真实UI时会经过压缩，压缩标识多级嵌套的标签最终可能是使用一个Native View展示的，压缩发生在ReactCompositeComponent的mountComponent过程中
+### 初始化挂载流程   
+1. 顶层element -> 实例化为internalInstance（ReactCompositeComponent） -> internalInstance.mountComponent -> render获得下一级element（重复实例化并mountComponent，直至遇到ReactNativeComponent） -> UIManager.createView(Native中真实创建View，返回关联的tag) -> 遍历children， 对child（element）实例化为internalInstance，重复上述挂载过程 -> UIManager.setChildren(将子节点渲染的tag与父tag关联)    
+2. 对于element树，从上到下逐层渲染，element实例化为ReactCompositeComponent或ReactNativeBaseComponent，子节点为数组的均包裹在ReactNativeBaseComponent下。 
+3. 真实的View由ReactNativeBaseComponent负责通过UIManager渲染
+4. ReactCompositeComponent负责数据管理、传递
+5. 开发中嵌套的组件渲染为真实UI时会经过压缩，压缩标识多级嵌套的标签最终可能是使用一个Native View展示的，压缩发生在ReactCompositeComponent的mountComponent过程中
 
-##  
-
-> ### 更新流程
-> 1. 当触发更新时，由一个节点开始，向下逐层解析，中间经过diff策略（element diff、component diff、children diff）   
-> 2. element diff： 比较前后该位置的element，若其可以更新，则向下继续更新；若不可更新，卸载纠节点，挂载新节点
-> 3. component diff: shouldComponentUpdate
-> 4. children diff: 移动需保留的旧节点并更新，删除废弃的旧节点并卸载，插入新建的节点并挂载
+### 更新流程
+1. 当触发更新时，由一个节点开始，向下逐层解析，中间经过diff策略（element diff、component diff、children diff）   
+2. element diff： 比较前后该位置的element，若其可以更新，则向下继续更新；若不可更新，卸载纠节点，挂载新节点
+3. component diff: shouldComponentUpdate
+4. children diff: 移动需保留的旧节点并更新，删除废弃的旧节点并卸载，插入新建的节点并挂载
 
 
 
