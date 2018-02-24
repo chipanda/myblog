@@ -9,9 +9,10 @@ tags:
 ---
 
 看了一段时间React源码，主要是React Native实现的Virtual Dom树渲染更新部分。React版本是15.2.1，React Native版本是0.30.0。
-想着写成自己的第一个系列博客，梳理巩固所思所得，将来忘了也能有个快速回顾的资料。如果能对他人有所助益，是更吼的了。
+自己的第一个系列博客，梳理巩固所思所得。如果能对你有所助益，是更吼的了。
 
 以下是目录结构
+<!-- more -->
 
 
 ## React中的类
@@ -21,7 +22,7 @@ ReactComponent：外部组件类
 ReactCompositeComponent：内部组件类        
 ReactNativeBaseComponent：RN中映射到Native的组件类     
 
-## React中类实例之间的关系
+## React的Virtual DOM——类实例间的关系
 
 instantiateReactComponent: 通过element实例成ReactCompositeComponent或ReactNativeBaseComponent       
 生命周期：ReactComponent提供实现，ReactNativeBaseComponent管理调用      
@@ -61,7 +62,4 @@ ReactReconciler：组件处理中心：挂载、更新、卸载
 ReactChildReconciler：对children中有需要的项执行ReactReconciler     
 ReactMultiChild：拓展ReactNativeBaseComponent，作为中间层调用ReactChildReconciler，children diff更新策略
 
-
-
-<!-- more -->
 

@@ -94,20 +94,8 @@ React内部真正管理组件渲染和更新的类（手动划重点）。其�
 
 *******
 
-## 总结
+本节介绍了React中的几个基础类的概念，下节将它们串联起来。
 
-### 初始化挂载流程   
-1. 顶层element -> 实例化为internalInstance（ReactCompositeComponent） -> internalInstance.mountComponent -> render获得下一级element（重复实例化并mountComponent，直至遇到ReactNativeComponent） -> UIManager.createView(Native中真实创建View，返回关联的tag) -> 遍历children， 对child（element）实例化为internalInstance，重复上述挂载过程 -> UIManager.setChildren(将子节点渲染的tag与父tag关联)    
-2. 对于element树，从上到下逐层渲染，element实例化为ReactCompositeComponent或ReactNativeBaseComponent，子节点为数组的均包裹在ReactNativeBaseComponent下。 
-3. 真实的View由ReactNativeBaseComponent负责通过UIManager渲染
-4. ReactCompositeComponent负责数据管理、传递
-5. 开发中嵌套的组件渲染为真实UI时会经过压缩，压缩标识多级嵌套的标签最终可能是使用一个Native View展示的，压缩发生在ReactCompositeComponent的mountComponent过程中
-
-### 更新流程
-1. 当触发更新时，由一个节点开始，向下逐层解析，中间经过diff策略（element diff、component diff、children diff）   
-2. element diff： 比较前后该位置的element，若其可以更新，则向下继续更新；若不可更新，卸载纠节点，挂载新节点
-3. component diff: shouldComponentUpdate
-4. children diff: 移动需保留的旧节点并更新，删除废弃的旧节点并卸载，插入新建的节点并挂载
 
 
 
