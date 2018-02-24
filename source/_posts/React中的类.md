@@ -8,15 +8,17 @@ categories:
 date: 2018-02-23 20:13:32
 ---
 
-
 React实现了一套由数据到展示的渲染更新方案。数据存放在一个个节点中，最终的展示由节点组成的树决定。任何展示的更新都来源于数据的更新，即props或state的更新。
 <!-- more -->
+*******
 
 ## ReactElement：节点类      
 
 数据节点，以后简称element，存储了type、key、ref、props等内容。
 
 render的作用就是生成element，是渲染的第一站。element保存了props而并没有state，因为state会在render方法内作为某个element的props存储在element中。
+
+******
 
 ## ReactComponent：外部组件类      
 
@@ -28,12 +30,13 @@ ReactComponent具备setState和forState两个方法，两个方法的本质是�
 
 *注释：React中ReactComponent特指React.Component，我们这里把纯函数也算作一个特殊的ReactComponent，即外部组件类，便于后续理解。*
 
-
 ### 总结为三点主要作用：    
     
 1. 描述了渲染的树结构   
 2. 维护了state    
 3. 解释了在生命周期或事件触发时希望执行的内容    
+
+*******
 
 ## ReactCompositeComponent：内部组件类        
 
@@ -66,6 +69,8 @@ React内部真正管理组件渲染和更新的类（手动划重点）。其�
 2. 对_renderedComponent继续unmountComponent，完成了一次卸载过程中的向下解析。 
 3. 清空存储的各种5数据
 
+********
+
 ## ReactNativeBaseComponent：RN中映射到Native的组件类     
 
 真正会被Native渲染的组件类，通过UIManager将渲染内容传递给Native绘制。其实例为internalInstance的一种。
@@ -86,6 +91,8 @@ React内部真正管理组件渲染和更新的类（手动划重点）。其�
 
 ### 卸载：unmountComponent
 1. 遍历children执行unmountComponent 
+
+*******
 
 ## 总结
 
