@@ -30,7 +30,7 @@ instantiateReactComponent: 通过element实例成ReactCompositeComponent或React
 render与逐层渲染      
 
 
-## React中的一些工具辅助类
+## React中的一些辅助工具类
 
 Transaction：在执行目标方法前后执行配置好的方法    
 CallbackQueue：管理回调队列     
@@ -45,7 +45,7 @@ shouldComponentUpdate: component diff
 ReactUpdateQueue：setState等内部实现       
 ReactDefaultBatchingStrategy：所有更新的入口与出口   
 ReactNativeReconcileTransaction：处理更新后需执行的回调     
-ReactUpdatesFlushTransaction：清空待更新组件
+ReactUpdatesFlushTransaction：清空待更新组件        
 
 
 ## React的更新流程（二）
