@@ -40,25 +40,19 @@ traverseAllChildren：遍历this.props.children
 
 ## React的更新流程（一）
 
-shouldUpdateReactComponent：element diff   
-shouldComponentUpdate: component diff     
-ReactUpdateQueue：setState等内部实现       
-ReactDefaultBatchingStrategy：所有更新的入口与出口   
-ReactNativeReconcileTransaction：处理更新后需执行的回调     
-ReactUpdatesFlushTransaction：清空待更新组件        
+ReactDefaultBatchingStrategy：更新的入口与出口 
+ReactUpdates: 批处理更新      
+ReactUpdateQueue：setState等内部实现   
 
 
 ## React的更新流程（二）
 
-batchedUpdates：保证callback在一次updatequeue中执行        
-enqueueUpdate：压入一个需更新的internalInstance     
-flushBatchedUpdates: 发起一次清空待更新组件      
-例子：setState后取到的值是新值还是旧值      
-
+ReactReconciler：组件处理中心：挂载、更新、卸载       
+shouldUpdateReactComponent：element diff   
+shouldComponentUpdate: component diff      
 
 ## React的更新流程（三）
   
-ReactReconciler：组件处理中心：挂载、更新、卸载       
 ReactChildReconciler：对children中有需要的项执行ReactReconciler     
 ReactMultiChild：拓展ReactNativeBaseComponent，作为中间层调用ReactChildReconciler，children diff更新策略
 

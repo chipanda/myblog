@@ -5,7 +5,7 @@ tags:
 ---
 本节讲述React中的Virtual DOM是如何逐层解析并绘制为真实页面的。
 <!-- more -->
-
+*******
 ## instantiateReactComponent: 通过element实例成ReactCompositeComponent或ReactNativeBaseComponent        
 
 1. instantiateReactComponent将节点实例化为具备挂载、更新、卸载能力的实例

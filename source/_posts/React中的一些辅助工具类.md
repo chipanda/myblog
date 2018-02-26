@@ -6,6 +6,7 @@ tags:
 
 本节介绍几个工具类，React中更新任务的执行与管理依赖它们辅助完成。
 <!-- more -->
+*******
 
 ## Transaction：在执行目标方法前后执行配置好的方法    
 
@@ -20,6 +21,8 @@ perform执行有以下特点
 * 执行过程中的异常会被捕获，并继续执行原流程中的下一步
 * 每个wrapper的initialize的返回值作为其close执行时的参数
 
+*******
+
 ## CallbackQueue：管理回调队列     
 
 顾名思义，管理一个回调队列，并在需要时执行。
@@ -29,6 +32,8 @@ perform执行有以下特点
 * enqueue\(callback，context\)，在队列里压入新的回调方法和其执行作用域
 * notifyAll\(\)，依次执行回调队列中的回调方法
 
+*******
+
 ## PooledClass：为了优化实例内存而做的类拓展      
 
 为优化频繁创建的对象实例而设计，当对象使用后不销毁而是初始化其参数，等待之后需要新实例时重置空闲对象的参数以供使用，避免了重新创建新对象。
@@ -37,6 +42,8 @@ perform执行有以下特点
 * 通过PooledClass.addPoolingTo改造KClass，KClass.prototype需实现destructor方法，用来在实例释放时初始化参数
 * 通过KClass.getPooled()获取实例
 * 通过KClass.release(instance)释放实例（内部调用了destructor）
+
+*******
 
 ## traverseAllChildren：遍历this.props.children     
 
