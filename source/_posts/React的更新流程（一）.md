@@ -12,6 +12,7 @@ React的更新流程（批处理更新）是围绕待更新组件（React称为d
 4. 执行回调（生命周期函数、setState传入的回调方法）
 5. 若在3、4间产生了新的dirtyComponent，重复3、4步，直至dirtyComponents清空，完成了一次完整的批处理更新
 <!-- more -->
+*******     
 ## ReactDefaultBatchingStrategy
 
 全局变量，管理一次更新流程的开始、结束。功能如下：
