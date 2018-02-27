@@ -2,6 +2,10 @@
 title: React的Virtual DOM——类实例间的关系
 date: 2018-02-24 20:16:52
 tags:
+  - react
+  - react-native
+categories:
+  - react
 ---
 本节讲述React中的Virtual DOM是如何逐层解析并绘制为真实页面的。
 <!-- more -->

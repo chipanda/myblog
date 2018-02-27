@@ -1,7 +1,11 @@
 ---
-title: '## React的更新流程（三）'
+title: React的更新流程（三）
 date: 2018-02-27 10:54:54
 tags:
+  - react
+  - react-native
+categories:
+  - react
 ---
 
 前一节讲述了单个节点的更新，本节介绍Virtual DOM树中的多个子节点是如何更新的，即ReactNativeBaseComponent的renderedChildren的更新。

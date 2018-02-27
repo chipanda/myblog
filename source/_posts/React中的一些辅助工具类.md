@@ -2,6 +2,10 @@
 title: React中的一些辅助工具类
 date: 2018-02-26 10:57:54
 tags:
+  - react
+  - react-native
+categories:
+  - react
 ---
 
 本节介绍几个工具类，React中更新任务的执行与管理依赖它们辅助完成。

@@ -2,6 +2,10 @@
 title: React的更新流程（二）
 date: 2018-02-27 10:54:39
 tags:
+  - react
+  - react-native
+categories:
+  - react
 ---
 上节讲述了React的更新流程，更新流程是以完成所有dirtyComponents的更新结束的。        
 dirtyComponent是internalInstance，任意组件的挂载、更新、卸载都是通过ReactReconciler统一调用的。

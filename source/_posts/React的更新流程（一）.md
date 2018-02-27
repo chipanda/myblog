@@ -2,6 +2,10 @@
 title: React的更新流程（一）
 date: 2018-02-26 15:51:08
 tags:
+  - react
+  - react-native
+categories:
+  - react
 ---
 React的更新流程（批处理更新）是围绕待更新组件（React称为dirtyComponent）来实现，dirtyComponent即ReactCompositeComponent实例。
 
