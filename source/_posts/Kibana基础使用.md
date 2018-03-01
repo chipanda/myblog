@@ -1,8 +1,16 @@
-# Kibana基础使用
+---
+title: Kibana基础使用
+tags:
+  - Kibana
+categories:
+  - Other
+date: 2018-03-01 15:13:32
+---
+
 
 ## 目录
 
-* 一、discover（发现）
+* 一、Discover（发现）
     * Apache Lucene
     * filter
     * 时间过滤器
@@ -15,10 +23,10 @@
     * Dashboard
     * 非索引字段
     * 资料
-
+<!-- more -->
 *******
 
-## 一、discover（发现）
+## 一、Discover（发现）
 
 通过指定检索条件查询符合的日志记录，常用于日志所含信息的分析
 
@@ -26,17 +34,17 @@
 
 查询可分解为术语和运算符。 有两种类型的术语：单一术语和短语。
 
-单一术语："app.blipay.show_fail"
+单一术语："app.xxx.show_fail"
 短语： "gen fail", 注意使用双引号，单引号会被识别为两个单一术语gen和fail
 
 1. 字段查询
 
-    entry_key:"app.blipay.show_fail" 或 "app.blipay.show_fail" 或 entry_key:app.blipay.show_fail
+    entry_key:"app.xxx.show_fail" 或 "app.xxx.show_fail" 或 entry_key:app.xxx.show_fail
 
 2. 通配符
 
-    ？单个 app.blipay.show_fa?l        
-    \* 多个 app.blipay.show_f*
+    ？单个 app.xxx.show_fa?l        
+    \* 多个 app.xxx.show_f*
 
 3. 范围查询
 
@@ -48,12 +56,12 @@
 
     `AND NOT OR + -`     
     +表示其后面的术语必须存在而不等于AND
-    app.blipay.show_fail app.blipay.show_success 等价于 app.blipay.show_fail OR app.blipay.show_success
+    app.xxx.show_fail app.xxx.show_success 等价于 app.xxx.show_fail OR app.xxx.show_success
 
 5. 分组
 
     `()`        
-    (app.blipay.show_success OR app.blipay.show_fail) AND package_info.version:[0 TO 271}
+    (app.xxx.show_success OR app.xxx.show_fail) AND package_info.version:[0 TO 271}
 
 6. 需转义的字符
 

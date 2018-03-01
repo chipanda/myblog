@@ -9,7 +9,7 @@ categories:
 ---
 
 redux允许添加中间件的方式封装dispatch，源码实现很简单（很精彩），但涉及到多层闭包的使用和函数式编程在初次理解时还是要费些功夫的。
-
+<!-- more -->
 ## applyMiddleware源码
 
     export default function applyMiddleware(...middlewares) {
